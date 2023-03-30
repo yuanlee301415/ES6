@@ -1,0 +1,17 @@
+<script>
+    function* quips(name){
+        yield '1:>hello '+name+' !';
+        yield console.log('2:');
+        if(name.startsWith('X')){
+            yield '3:Start with X.';
+        }
+        yield '3:Bye!';
+    }
+
+    var iter=quips('Tom');
+    console.log(iter);
+    console.log(iter.next());
+    console.log(iter.next());
+    console.log(iter.next());
+    console.log(iter.next());
+</script>

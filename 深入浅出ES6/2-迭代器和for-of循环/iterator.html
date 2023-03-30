@@ -1,0 +1,11 @@
+<script>
+
+    var list=[1,2,3,4];
+    var iterator=list[Symbol.iterator]();
+    var r=iterator.next();
+    while(!r.done){
+        console.log(r);
+        console.log(r.value);
+        r=iterator.next();
+    }
+</script>

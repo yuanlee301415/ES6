@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    console.warn('Symbol.for(key)：使用key全局检索并登记');
+    let sb1=Symbol.for('sb');
+    let sb2=Symbol.for('sb');
+    console.log(sb1==sb2);
+
+    let sb3=Symbol('sb');
+    let sb4=Symbol('sb');
+    console.log(sb3==sb4);
+
+   console.warn('Symbol.keyFor(symbol):返回一个已经登记的symbol的key');
+   console.log(Symbol.keyFor(sb1));
+   console.log(Symbol.keyFor(sb3));
+
+</script>
+</body>
+</html>

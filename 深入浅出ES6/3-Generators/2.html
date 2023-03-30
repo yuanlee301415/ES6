@@ -1,0 +1,12 @@
+<script>
+    function* quips(name){
+       for(var i=0;i<5;i++){
+           yield console.log(i);
+       }
+    }
+
+    var iter=quips();
+    console.log(iter);
+    console.log(iter.next());
+
+</script>

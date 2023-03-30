@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let sb=Symbol();
+    let sb2=Symbol();
+
+    console.log(sb);
+    console.log(typeof sb);
+
+    console.log(sb == sb2);
+
+    console.warn('Symbol不能直接当作字符串 1：作为字符串连接');
+    try{
+        'My sym :'+sb;
+    }catch(e){
+        console.error(e);
+    }
+
+    console.warn('Symbol不能直接当作字符串 2：传递给参数必须是字符串的new String()构造函数');
+    try{
+        new String(sb);
+    }catch(e){
+        console.error(e);
+    }
+
+    console.warn('Symbol的类型转换：只支持String()转换为字符串和隐式或显式转换为布尔值');
+    let sbStr=String(sb);
+    console.log(sbStr,typeof sbStr);
+
+
+    let sbBool=!!sb;
+    let sb2Bool=new Boolean(sb2);
+    console.log(sbBool,typeof sbBool);
+    console.log(sb2Bool,typeof sb2Bool);
+
+    console.warn('Symbol的类型转换：不能进行其它类型的转换');
+    try{
+        Number(sb);
+    }catch(e){
+        console.error(e);
+    }
+
+</script>
+</body>
+</html>

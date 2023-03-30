@@ -1,0 +1,31 @@
+<script>
+    var list=[1,2,3,4,5];
+
+    for(var v of list){
+        console.log(v);
+    }
+
+    //beak
+    console.info('break');
+    for(var v of list){
+        if(3==v)break;
+        console.log(v);
+    }
+
+    //return
+    console.info('return');
+    (function(){
+        for(var v of list){
+            if(3==v)return;
+            console.log(v);
+        }
+    })();
+
+
+    //map
+
+
+    //set
+
+
+</script>

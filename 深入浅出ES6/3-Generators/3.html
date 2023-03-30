@@ -1,0 +1,41 @@
+<script>
+
+    class Range{
+        constructor(start,stop){
+            this.value=start;
+            this.stop=stop;
+        }
+        [Symbol.iterator](){return this;}
+        next(){
+            var val=this.value;
+            if(val<this.stop){
+                this.value++
+                return {done:false,value:val}
+            }else{
+                return {done:true,value:undefined}
+            }
+        }
+    }
+
+    function range(start,stop){
+        return new Range(start,stop);
+    }
+
+    var r=range(1,3);
+    //console.log(r);
+    console.log(r.next());
+    //console.log(r);
+    console.log(r.next());
+    //console.log(r);
+    console.log(r.next());
+
+    function* range2(start,stop){
+        for(var i=start;i<stop;i++){
+            yield i;
+        }
+    }
+    var r2=range2(1,3);
+    console.log(r2.next());
+    console.log(r2.next());
+    console.log(r2.next());
+</script>

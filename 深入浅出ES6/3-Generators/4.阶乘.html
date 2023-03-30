@@ -1,0 +1,32 @@
+<script>
+
+    //阶乘
+    function* jc(n){
+        var r=1;
+        if(isNaN(n) || n<=1)yield 'Error.';
+        while(n){
+            n--;
+            r*=n;
+            yield r;
+        }
+    }
+
+    var j=jc();
+    console.log(j.next());
+    console.log(j.next());
+    console.log(j.next());
+    console.log(j.next());
+    console.log(j.next());
+    console.log(j.next());
+
+
+    var j=jc(5);
+    console.log(j.next());
+    console.log(j.next());
+    console.log(j.next());
+    console.log(j.next());
+    console.log(j.next());
+    console.log(j.next());
+
+
+</script>

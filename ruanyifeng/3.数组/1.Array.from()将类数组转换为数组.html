@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+
+</body>
+<script>
+    let arrLike={
+        0:'a',
+        1:'b',
+        2:'c',
+        9:'k',
+        length:10
+    };
+    console.warn('类数组对象(具有length属性的对象)：');
+    console.log(Array.from(arrLike));
+    console.log(Array.from({length:2}));//[undefined,undefined]
+    console.log(Array.from({'长度':2}));//[]
+    //console.log(Array.from(null));//Error
+
+
+    console.warn('Set对象：');
+    console.log(Array.from(new Set([1,2,3])));
+
+    console.warn('Map对象：');
+    let s1=new Map([['name','Han']]);
+    let s2=new Map();
+    s2.set('name','Mei');
+    console.log(Array.from(s1));
+    console.log(Array.from(s2));
+
+    console.warn('第2个参数：转换函数');
+    console.log(Array.from(arrLike,s=>{
+        return s&&s.toUpperCase();
+    }));
+
+
+</script>
+</html>

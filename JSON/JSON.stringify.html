@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en" ng-app="app">
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        dl {
+            border: 1px solid #666;
+            margin: 10px;
+            padding: 10px;
+        }
+    </style>
+</head>
+
+<body>
+<dl>
+	<dt>无第二、三个参数</dt>
+	<dd><pre id='d1'></pre></dd>
+</dl>
+
+<dl>
+	<dt>第二个参数为函数</dt>
+	<dd><pre id='d2'></pre></dd>
+</dl>
+
+<dl>
+	<dt>第二个参数为数组</dt>
+	<dd><pre id='d3'></pre></dd>
+</dl>
+
+
+<dl>
+	<dt>第二个参数为数组：作为对对象键值对过滤（只数组的顺序返回存在于数组里的键）</dt>
+	<dd><pre id='d4'></pre>//只返回存数组指定的键值（不存在于对象的键值不返回）</dd>
+</dl>
+
+
+<script type="text/javascript">
+	var data={
+		id:'D01',
+		name:'Tom',
+		age:10,
+		qq:85821212
+	}
+
+	var arr=[0,1];
+
+	var s1=JSON.stringify(data);
+	document.getElementById('d1').innerHTML=s1;
+
+	
+	var s2=JSON.stringify(data,function(u,row){
+		console.log(arguments);
+		return row.toString().toUpperCase();
+	});
+	document.getElementById('d2').innerHTML=s2;
+
+	var s3=JSON.stringify(data,arr);
+	document.getElementById('d3').innerHTML=s3;
+
+	var s4=JSON.stringify(data,['qq','name','gender']);
+	document.getElementById('d4').innerHTML=s4;
+
+
+
+</script>
+</body>
+</html>

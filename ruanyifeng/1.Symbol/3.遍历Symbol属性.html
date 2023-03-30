@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let name=Symbol();
+    let age=Symbol();
+    let o={
+        id:1,
+        [name]:'HanMei'
+    };
+    o[age]=20;
+
+    console.log(o);
+
+
+    console.warn('for...in不会遍历到Symbol属性');
+    for(let key in o){
+        console.log(key,o[key]);
+    }
+
+    console.warn('通过getOwnPropertySymbols遍历');
+    let sbs=Object.getOwnPropertySymbols(o);
+    console.log('getOwnPropertySymbols:',sbs);
+    for(let sb of sbs){
+        console.log(sb,o[sb]);
+    }
+
+
+    console.warn('通过Reflect.ownKeys遍历');
+    let keys=Reflect.ownKeys(o);
+    console.log(keys);
+
+</script>
+</body>
+</html>

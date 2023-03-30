@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+
+<script>
+    const main=(function(){
+
+        let self;
+
+        return {
+            init(){
+                self=this;
+                self.start()
+            },
+            async start(){
+                let urls=['/1','/2','/3'];
+                let res=await self.get(urls);
+                console.log('Res:',res);
+            },
+            get(urls){
+                return new Promise(resolve => {
+                    let res=[];
+                    {
+                        if(!urls.length)return resolve(res);
+                        let url=urls.shift();
+                        console.log('url:',url);
+                        res.push({url});
+                        setTimeout(()=>{
+                            iife();
+                        },500);
+                    }
+                });
+            }
+        }
+    })();
+
+    main.init();
+</script>
+</body>
+</html>
