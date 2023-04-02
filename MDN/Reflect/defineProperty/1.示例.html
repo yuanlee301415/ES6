@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.示例</title>
+</head>
+<body>
+
+</body>
+<script>
+    let obj, ret
+    obj = {}
+    ret = Reflect.defineProperty(obj, 'a', {value: 1})
+    console.log({ obj, ret })
+
+    // Mock （通过：重复定义描述符）定义失败
+    ret = Reflect.defineProperty(obj, 'a', { value: 2})
+    if (!ret) {
+        console.error('重复定义失败')
+    }
+</script>
+</html>
