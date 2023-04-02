@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.示例</title>
+</head>
+<body>
+<script>
+    let obj, desc
+    obj = {
+        get foo() {
+            return 'foo'
+        }
+    }
+    console.log('obj:', obj)
+    desc = Object.getOwnPropertyDescriptor(obj, 'foo')
+    console.log('desc:', desc)
+
+    obj = {bar: 'bar'}
+    desc = Object.getOwnPropertyDescriptor(obj, 'bar')
+    console.log('desc:', desc)
+
+    obj = {}
+    Object.defineProperty(obj, 'baz', {value: 'baz'})
+    desc = Object.getOwnPropertyDescriptor(obj, 'baz')
+    console.log('desc:', desc)
+
+    obj = {}
+    Object.defineProperty(obj, 'prop', {value: 1, configurable: true})
+    desc = Object.getOwnPropertyDescriptor(obj, 'prop')
+    desc.value = 2
+    console.log('obj.prop:', obj.prop)
+    Object.defineProperty(obj, 'prop', desc)
+    console.log('obj.prop:', obj.prop)
+</script>
+</body>
+</html>

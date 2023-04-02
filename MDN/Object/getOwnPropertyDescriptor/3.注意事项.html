@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3.注意事项</title>
+</head>
+<body>
+<h1>
+  在 ES5 中，如果该方法的第一个参数不是对象（而是原始类型），那么就会产生出现 TypeError。而在 ES2015，第一个的参数不是对象的话就会被强制转换为对象。
+</h1>
+</body>
+<script>
+  let desc
+  desc = Object.getOwnPropertyDescriptor('foo', 0)
+  console.log('字符串下标的 desc:', desc)
+
+</script>
+</html>
