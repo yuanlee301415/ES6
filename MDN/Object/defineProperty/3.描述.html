@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3.描述</title>
+</head>
+<body>
+<script>
+    /**
+     * 默认情况下，使用 Object.defineProperty() 添加的属性值是不可修改（immutable）的
+     */
+    console.warn('默认情况')
+    const obj = {}
+    Object.defineProperty(obj, 'prop', {
+        configurable: false,
+        enumerable: false,
+        value: 30
+    })
+    obj.prop = 40 // 静默失败
+    console.log('obj.prop:', obj.prop) // 30
+
+    /**
+     * 属性描述符的两种主要方式：
+     * 1.数据描述符
+     * 2.存取描述符
+     */
+    /**
+     * 数据描述符
+     */
+    console.warn('数据描述符')
+    const obj2 = {}
+    Object.defineProperty(obj2, 'prop', {
+        value: 30
+    })
+    console.log('obj2:', obj2)
+
+    /**
+     * 存取描述符
+     */
+    console.warn('存取描述符')
+    const obj3 = {}
+    let _prop = 30
+    Object.defineProperty(obj3, 'prop', {
+        get() {
+            return _prop
+        },
+        set(val) {
+            _prop = val
+        }
+    })
+    obj3.prop = 40
+    console.log('obj3:', obj3)
+
+    /**
+     * 描述符通用配置：
+     * 1.configurable
+     * 当且仅当该属性的 configurable 键值为 true 时，该属性的描述符才能够被改变，同时该属性也能从对应的对象上被删除。 默认为 false。
+     */
+    console.warn('configurable')
+    /**
+     * configurable 键值为 true 时，该属性的描述符才能够被改变
+     */
+    const obj4 = {}
+    Object.defineProperty(obj4, 'prop', {
+        configurable: true,
+        value: 30
+    })
+    Object.defineProperty(obj4, 'prop', { // 可以再次定义（修改）描述符
+        value: 40
+    })
+    console.log('obj4:', obj4)
+
+    /**
+     * configurable 键值为 false 时，该属性的描述符不能够被改变
+     */
+    const obj5 = {}
+    Object.defineProperty(obj5, 'prop', {
+        configurable: false,
+        value: 30
+    })
+
+    /* 尝试修改不可修改的描述符，产生语法错误
+    // Uncaught TypeError: Cannot redefine property: prop
+    Object.defineProperty(obj5, 'prop', {
+        value: 40
+    })
+    console.log('obj5:', obj5)
+    */
+
+    /**
+     * configurable 键值为 true 时，该属性的描述符才能够被删除
+     */
+    delete obj4.prop
+    console.log('obj4 delete prop:', obj4.prop) // undefined
+
+    delete obj5.prop // 静默失败
+    console.log('obj5 delete prop:', obj5.prop) // 30
+
+    /**
+     * 描述符通用配置：
+     * 2.enumerable
+     * 当且仅当该属性的 enumerable 键值为 true 时，该属性才会出现在对象的枚举属性中。 默认为 false。
+     */
+    console.warn('enumerable')
+    const obj61 = {other: 'Other'}
+    Object.defineProperty(obj61, 'prop', {
+        enumerable: true, // `prop` 属性可以被枚举
+        value: 30
+    })
+    for (const key in obj61) {
+        console.log('可以 for...in>key:', key)
+    }
+    console.log('可以 Object.keys:', Object.keys(obj61))
+
+    const obj62 = {other: 'Other'}
+    Object.defineProperty(obj62, 'prop', {
+        enumerable: false,  // `prop` 属性不可以被枚举
+        value: 30
+    })
+    for (const key in obj62) {
+        console.log('不可以 for...in>key:', key)
+    }
+    console.log('不可以 Object.keys:', Object.keys(obj62))
+
+    /**
+     * 数据描述符还具有以下可选键值
+     * 1.value
+     * 该属性对应的值。可以是任何有效的 JavaScript 值（数值，对象，函数等）。 默认为 undefined。
+     */
+    console.warn('value')
+    const obj71 = {}
+    Object.defineProperty(obj71, 'prop', {
+        value: 30
+    })
+    console.log('obj71:', obj71)
+
+    /**
+     * 数据描述符还具有以下可选键值
+     * 2.writable
+     * 当且仅当该属性的 writable 键值为 true 时，属性的值，也就是上面的 value，才能被赋值运算符 (en-US)改变。 默认为 false
+     */
+    console.warn('writable')
+    const obj72 = {}
+    Object.defineProperty(obj72, 'prop', {
+        writable: true,
+        value: 30
+    })
+    obj72.prop = 40
+    console.log('obj72:', obj72)
+
+    /**
+     * 存取描述符还具有以下可选键值：
+     * 1. get
+     * 属性的 getter 函数，如果没有 getter，则为 undefined。当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入 this 对象（由于继承关系，这里的this并不一定是定义该属性的对象）。该函数的返回值会被用作属性的值。 默认为 undefined
+     */
+    console.warn('get')
+    const obj81 = {_prop: 30}
+    Object.defineProperty(obj81, 'prop', {
+        get() {
+            return this._prop
+        }
+    })
+    obj81.prop = 40 // 只有 get，没有 set，故：赋值操作静默失败
+    console.log('obj81.prop:', obj81.prop, obj81)
+
+    /**
+     * 存取描述符还具有以下可选键值：
+     * 2.set
+     * 属性的 setter 函数，如果没有 setter，则为 undefined。当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的 this 对象。 默认为 undefined。
+     */
+    console.warn('set')
+    const obj82 = {_prop: 30}
+    Object.defineProperty(obj82, 'prop', {
+        set() {
+            return this._prop
+        }
+    })
+    console.log('obj82.prop:', obj82.prop) // 只有 set，没有 get，故：读取操作静默失败
+
+    /**
+     * 如果一个描述符不具有 value、writable、get 和 set 中的任意一个键，那么它将被认为是一个数据描述符
+     */
+    const obj90 = {}
+    Object.defineProperty(obj90, 'prop', {
+        configurable: true,
+        enumerable: true
+    })
+    console.log('obj90:', obj90)
+
+    /**
+     * 如果一个描述符同时拥有 value 或 writable 和 get 或 set 键，则会产生一个异常
+     */
+    const obj91 = {}
+/*
+    // Uncaught TypeError: Invalid property descriptor. Cannot both specify accessors and a value or writable attribute
+    Object.defineProperty(obj91, 'prop', {
+        value: 20,
+        set() {}
+    })
+*/
+    /**
+     * 描述符对象的属性不一定是自身属性，也要考虑继承来的属性
+     */
+    console.warn('描述符的属性的继承')
+    const obj92 = {}
+
+    // 描述符对象继承了属性
+    function Desc() {
+        this.writable = false
+    }
+    Object.defineProperty(obj92, 'prop', new Desc())
+    obj92.prop = 10
+    console.log('obj92.prop:', obj92.prop)
+
+    // 消除描述符对象继承属性
+    const desc92 = Object.create(null) // 没有继承属性
+    desc92.value = 'val1'
+    Object.defineProperty(obj92, 'prop1', desc92)
+    console.log('obj92.prop1:', obj92.prop1)
+
+    // 循环使用同一描述符对象
+    function withValue(value) {
+        const d = withValue.d || (withValue.d = {
+            configurable: false,
+            enumerable: false,
+            writable: false,
+            value: undefined
+        })
+        d.value = value
+        return d
+    }
+    Object.defineProperty(obj92, 'prop2', withValue('val2'))
+    console.log('obj92:', obj92)
+</script>
+</body>
+</html>

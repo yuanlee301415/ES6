@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.语法</title>
+</head>
+<body>
+<script>
+    /**
+     * Symbol
+     */
+    const sym = Symbol('prop')
+    const obj = {}
+    Object.defineProperty(obj, sym, {
+        value: 32,
+        writable: false
+    })
+    console.log(obj[sym]) // 32
+
+    /**
+     * 返回值
+     */
+    const obj2 = Object.defineProperty(obj, sym, {
+        value: 32,
+        writable: false
+    })
+    console.log(obj === obj2) // true
+</script>
+</body>
+</html>

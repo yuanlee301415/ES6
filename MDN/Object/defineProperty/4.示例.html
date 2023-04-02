@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4.示例</title>
+</head>
+<body>
+<script>
+    /**
+     * 创建属性
+     * 如果对象中不存在指定的属性，Object.defineProperty() 会创建这个属性。当描述符中省略某些字段时，这些字段将使用它们的默认值。
+     */
+    console.warn('创建属性')
+    const obj100 = {}
+    Object.defineProperty(obj100, 'prop1', {})
+
+    /**
+     * 修改属性
+     * 1.如果属性已经存在，Object.defineProperty()将尝试根据描述符中的值以及对象当前的配置来修改这个属性
+     */
+    console.warn('修改属性')
+    const obj110 = {prop: 'val'}
+    Object.defineProperty(obj110, 'prop', {
+        value: 'newVal'
+    })
+    console.log('obj110:', obj110)
+
+    /**
+     * 修改属性
+     * 2.如果旧描述符将其configurable 属性设置为false，则该属性被认为是“不可配置的”，并且没有属性可以被改变（除了单向改变 writable 为 false）
+     */
+    const obj120 = {}
+    Object.defineProperty(obj120, 'prop', {
+        configurable: false,
+        value: 1
+    })
+    // Object.defineProperty(obj120, 'prop', { value: 2 }) // Error
+    // Object.defineProperty(obj120, 'prop', { configurable: true }) // Error
+    // Object.defineProperty(obj120, 'prop', { writable: true }) // Error
+    Object.defineProperty(obj120, 'prop', {writable: false})
+    console.log('obj120:', obj120)
+
+
+    /**
+     * Writable 属性
+     * 当 writable 属性设置为 false 时，该属性被称为“不可写的”。它不能被重新赋值。
+     */
+    console.warn('Writable 属性')
+    const obj130 = {}
+    Object.defineProperty(obj130, 'prop', {
+        writable: false,
+        value: 1
+    })
+    // Object.defineProperty(obj130, 'prop', { value: 2 }) // Error
+    obj130.prop = 2
+    console.log('obj130.prop:', obj130.prop) // 1
+
+    /**
+     * Enumerable 属性
+     * enumerable 定义了对象的属性是否可以在 for...in 循环和 Object.keys() 中被枚举。
+     */
+    console.warn('Enumerable 属性')
+    const obj140 = {}
+    Object.defineProperty(obj140, 'a', {value: 'A', enumerable: true})
+    Object.defineProperty(obj140, 'b', {value: 'B', enumerable: false})
+    Object.defineProperty(obj140, 'c', {value: 'C'})
+    obj140.d = 'D'
+    Object.defineProperty(obj140, Symbol.for('e'), {value: 'E', enumerable: true})
+    Object.defineProperty(obj140, Symbol.for('f'), {value: 'F', enumerable: false})
+    console.log('Object.keys(obj140):', Object.keys(obj140)) // ['a', 'd']
+
+    const clone140 = {...obj140}
+    console.log('a:', clone140.a) // 'A'
+    console.log('b:', clone140.b) // undefined
+    console.log('c:', clone140.c) // undefined
+    console.log('d:', clone140.d) // 'D'
+    console.log('e:', clone140[Symbol.for('e')]) // 'E'
+    console.log('f:', clone140[Symbol.for('f')]) // undefined
+
+    /**
+     * Configurable 属性
+     * configurable 特性表示对象的属性是否可以被删除，以及除 value 和 writable 特性外的其他特性是否可以被修改。
+     */
+    console.warn('Configurable 属性')
+    const obj150 = {}
+    Object.defineProperty(obj150, 'prop', {configurable: false, value: 1})
+    // Object.defineProperty(obj150, 'prop', { configurable: true }) // Error
+    // Object.defineProperty(obj150, 'prop', { enumerable: true }) // Error
+    // Object.defineProperty(obj150, 'prop', { writable: true }) // Error
+    // Object.defineProperty(obj150, 'prop', { set() {} }) // Error
+    // Object.defineProperty(obj150, 'prop', { get() {} }) // Error
+    // Object.defineProperty(obj150, 'prop', { value: 2 }) // Error
+    delete obj150.prop // 不可删除
+    console.log('obj150.prop:', obj150.prop) //
+
+    const obj151 = {}
+    Object.defineProperty(obj151, 'prop', {configurable: true})
+    Object.defineProperty(obj151, 'prop', {configurable: true})
+    Object.defineProperty(obj151, 'prop', {enumerable: true})
+    Object.defineProperty(obj151, 'prop', {writable: true})
+    Object.defineProperty(obj151, 'prop', {
+        set() {
+        }
+    })
+    Object.defineProperty(obj151, 'prop', {
+        get() {
+        }
+    })
+    Object.defineProperty(obj151, 'prop', {value: 1})
+
+    console.log('obj151.prop:', obj151.prop) // 1
+    delete obj151.prop  // 可删除
+    console.log('obj151.prop:', obj151.prop) // undefined
+
+
+    /**
+     * 添加多个属性和默认值
+     * 通常，使用点运算符和 Object.defineProperty() 为对象的属性赋值时，数据描述符中的属性默认值是不同的
+     */
+    console.warn('添加多个属性和默认值')
+    const obj160 = {}
+    obj160.p1 = 1
+    // 等同于：
+    Object.defineProperty(obj160, 'p1', {value: 2, configurable: true, enumerable: true, writable: true})
+    console.log('obj160.p1:', obj160.p1)
+
+    Object.defineProperty(obj160, 'p2', {value: 3})
+    // 等同于：
+    // Object.defineProperty(obj160, 'p2', { value: 2, configurable: false, enumerable: false, writable: false })
+
+    /**
+     * 自定义 Setters 和 Getters
+     */
+    console.warn('自定义 Setters 和 Getters')
+
+    /**
+     * 下面的例子展示了如何实现一个自存档对象。当设置temperature 属性时，archive 数组会收到日志条目。
+     */
+    function Archiver() {
+        let temperature
+        const archive = []
+        Object.defineProperty(this, 'temperature', {
+            get() {
+                console.log('get temperature:', temperature)
+                return temperature
+            },
+            set(val) {
+                temperature = val
+                archive.push({temperature})
+            }
+        })
+        this.getArchive = function () {
+            return archive
+        }
+    }
+
+    const archiver = new Archiver()
+    archiver.temperature = 1
+    archiver.temperature = 2
+    archiver.temperature = 3
+    console.log(archiver.temperature)
+    console.log(archiver.getArchive())
+
+    /**
+     * 下面这个例子中，getter 总是会返回一个相同的值。
+     */
+    const pattern = {
+        get() {
+            return 'I alway return this string,whatever you have assigned'
+        },
+        set() {
+            this.myName = 'this is my name string'
+        }
+    }
+
+    function TestDefineSetAndGet() {
+        Object.defineProperty(this, 'myProp', pattern)
+    }
+
+    const test = new TestDefineSetAndGet()
+    test.myProp = 'newVal'
+    console.log('test.myProp:', test.myProp)
+    console.log('test.myName:', test.myName)
+
+    /**
+     * 继承属性
+     */
+    console.warn('继承属性')
+
+    /**
+     * 如果访问者的属性是被继承的，它的 get 和 set 方法会在子对象的属性被访问或者修改时被调用。如果这些方法用一个变量存值，该值会被所有对象共享。
+     */
+    function ClassA() {
+    }
+
+    let value
+    Object.defineProperty(ClassA.prototype, 'x', {
+        get() {
+            return value
+        },
+        set(val) {
+            value = val
+        }
+    })
+    const ca1 = new ClassA()
+    const ca2 = new ClassA()
+    ca1.x = 1
+    console.log('my2.x:', ca2.x) // 1
+
+    /**
+     * 可以通过将值存储在另一个属性中解决。在 get 和 set 方法中，this 指向某个被访问和修改属性的对象。
+     */
+    function ClassB() {
+    }
+
+    Object.defineProperty(ClassB.prototype, 'x', {
+        get() {
+            return this.stored_x
+        },
+        set(x) {
+            this.stroed_x = x
+        }
+    })
+    const cb1 = new ClassB()
+    const cb2 = new ClassB()
+    cb1.x = 1
+    console.log('cb2.x:', cb2.x) // undefined
+
+    /**
+     * 如果一个不可写的属性被继承，它仍然可以防止修改对象的属性
+     */
+    function ClassC() {
+    }
+
+    ClassC.prototype.x = 1
+    Object.defineProperty(ClassC.prototype, 'y', {value: 1, writable: false})
+    const cc = new ClassC()
+    cc.x = 2
+    console.log('cc.x:', cc.x) // 2
+    console.log('ClassC.prototype.x:', ClassC.prototype.x) // 1
+    cc.y = 2 // Ignored
+    console.log('cc.y:', cc.y) // 1
+    console.log('ClassC.prototype.y:', ClassC.prototype.y) // 1
+</script>
+</body>
+</html>

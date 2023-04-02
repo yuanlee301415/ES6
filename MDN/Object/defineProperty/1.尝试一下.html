@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.尝试一下</title>
+</head>
+<body>
+<script>
+    const obj = {}
+    Object.defineProperty(obj, 'prop', {
+        value: 30,
+        writable: false
+    })
+    obj.prop = 40
+    console.log(obj.prop) // 30
+</script>
+</body>
+</html>
