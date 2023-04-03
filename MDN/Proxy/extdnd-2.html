@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Extend-2-实现 MDN 版本</title>
+</head>
+<body>
+
+</body>
+<script>
+    function extend(sup, sub) {
+        const desc = Object.getOwnPropertyDescriptor(sub.prototype, 'constructor')
+        sub.prototype = Object.create(sup.prototype)
+        const proxy = new Proxy(sub, {
+            construct(target, argArray) {
+                const obj = Object.create(sub.prototype)
+                this.apply(target, obj, argArray)
+                return obj
+            },
+            apply(target, thisArg, argArray) {
+                sup.apply(thisArg, argArray)
+                sub.apply(thisArg, argArray)
+            }
+        })
+        desc.value = proxy
+        Object.defineProperty(sub.prototype, 'constructor', desc)
+        return proxy
+    }
+
+    let Person = function (name, age) {
+        this.name = name
+        this.age = age;
+    };
+    // console.log('Person.prototype:', Person.prototype.constructor)
+    Person.prototype.isPerson = true
+    Person.prototype.say = function () {
+        console.log(`say:`, {name: this.name, age: this.age, isPerson: this.isPerson})
+    }
+
+    let Student = extend(Person, function (name, age, school, grade) {
+        this.school = school
+        this.grade = grade
+    });
+    Student.prototype.isStudent = true
+    Student.prototype.study = function () {
+        console.log(`study:`, {name: this.name, age: this.age, isPerson: this.isPerson}, {
+            school: this.school,
+            grade: this.grade,
+            isStudent: this.isStudent
+        })
+    }
+
+    let peter = new Person("peter", 13);
+    console.log(peter);
+    peter.say()
+
+    let tom = new Student("peter", 13, 'TH', 6);
+    console.log(tom);
+    tom.say()
+    tom.study()
+</script>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>construct</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 尝试一下
+     */
+    function Monster1(disposition) {
+        this.disposition = disposition
+    }
+
+    const handler1 = {
+        construct(target, argArray, newTarget) {
+            console.log(`Creating a ${target.name}`)
+            return new target(...argArray)
+        }
+    }
+
+    const proxy1 = new Proxy(Monster1, handler1);
+
+    console.log('disposition:', new proxy1('fierce').disposition); // fierce
+
+</script>
+</html>

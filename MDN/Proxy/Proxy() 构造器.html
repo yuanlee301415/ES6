@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Proxy() 构造器</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 示例
+     * 选择性代理属性访问器
+     */
+    const target = {
+        'notProxied': 'original notProxied',
+        'proxied': 'original proxied',
+    }
+    const handler = {
+        get(target, prop, receiver) {
+            if (prop === 'proxied') {
+                return 'Replaced value'
+            }
+            return Reflect.get(...arguments)
+        }
+    }
+    const proxy = new Proxy(target, handler);
+
+    console.log('proxy.notProxied:', proxy.notProxied); // "original notProxied"
+    console.log('proxy.proxied:', proxy.proxied);    // "replaced value"
+    console.log('target.proxied:', target.proxied);    // "original proxied"
+</script>
+</html>

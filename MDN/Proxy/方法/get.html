@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>get</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 示例
+     * 以下代码演示如何拦截属性值的读取操作。
+     */
+    let target = {}
+    let p = new Proxy(target, {
+        get(target, prop, receiver) {
+            console.log('Called:', prop)
+            return 10
+        }
+    })
+    console.log('p.a:', p.a) // 10
+    console.log('target.a:', target.a) // undefined
+
+    /**
+     * 以下代码演示违反约束的情况。
+     */
+    let obj = {}
+    Object.defineProperty(obj, 'a', {
+        value: 1,
+        configurable: false,
+        enumerable: false,
+        writable: false
+    })
+    p = new Proxy(obj, {
+        get() {
+            return 10
+        }
+    })
+    // console.log(p.a) // Error
+</script>
+</html>

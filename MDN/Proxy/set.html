@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>set</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 示例
+     */
+    let proxy = new Proxy({}, {
+        set(target, p, newValue, receiver) {
+            target[p] = newValue
+            console.log('property set:', p, '=', newValue)
+            return true
+        }
+    })
+    proxy.a = 10
+    console.log('proxy.a:', proxy.a)
+</script>
+</html>
