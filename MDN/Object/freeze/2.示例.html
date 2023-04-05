@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.示例</title>
+</head>
+<body>
+<script>
+    /**
+     * 冻结对象
+     */
+    obj = {
+        foo: 'bar',
+        method() {
+        }
+    }
+    ret = Object.freeze(obj)
+    console.log('ret === obj:', ret === obj) // true
+    console.log('isFrozen:', Object.isFrozen(obj)) // true
+
+    /**
+     * 修改属性，会静默失败
+     */
+    obj.foo = 1
+    console.log('foo:', obj.foo) // bar
+
+    /**
+     * 新增属性，会静默失败
+     */
+    obj.newProp = 2
+    console.log('newProp:', obj.newProp) // undefined
+
+    /**
+     * 通过：Object.defineProperty() 修改属性，会抛出异常
+     */
+    try {
+        Object.defineProperty(obj, 'foo', {value: 3})
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: Cannot redefine property: foo
+    }
+
+    /**
+     * 通过：Object.setPrototypeOf() 设置原型对象，会抛出异常
+     */
+    try {
+        Object.setPrototypeOf(obj, {x: 1})
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: #<Object> is not extensible
+    }
+
+    /**
+     * 冻结数组
+     */
+    let ary = [0, 1, 2]
+    Object.freeze(ary)
+    ary[1] = 10 // 静默失败
+    ary[99] = 99 // 静默失败
+    try {
+        ary.push(100)
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: Cannot add property 3, object is not extensible
+    }
+    console.log(ary) // [0, 1, 2]
+
+    /**
+     * 浅冻结
+     * 只冻结目标对象的第一层（不可重新给第一层属性直接赋值）
+     * 但：可以修改第一层属性内部的嵌套对象的属性值
+     */
+    console.warn('浅冻结')
+    obj = {
+        numbers: [0, 1],
+        map: {
+            a: 1,
+            b: 2
+        }
+    }
+    Object.freeze(obj)
+    obj.numbers[0] = 100
+    obj.numbers.push(101)
+    delete obj.map.b
+    obj.map.c = 3
+    console.log('obj:', obj) // { map: {a: 1, c: 3}, numbers: [100, 1, 101] }
+
+    /**
+     * 冻结原始值
+     * 直接返回，不冻结原始值
+     */
+    console.warn('冻结原始值')
+    str = 'a'
+    let strRet = Object.freeze(str)
+    console.log('strRet:', strRet) // a
+    str = 'b'
+    console.log('str:', str) // b
+</script>
+</body>
+</html>
