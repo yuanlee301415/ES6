@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.示例</title>
+</head>
+<body>
+<script>
+    /**
+     * 复制对象
+     */
+    let obj = {a: 1, b: null, c: void 0, d: NaN}
+    let copy = Object.assign({}, obj)
+    console.log('copy:', copy) // { a: 1, b: null, c: undefined, d: NaN }
+    console.log('copy===obj:', copy === obj)
+
+    /**
+     * 深拷贝问题
+     * 针对深拷贝, 需要使用其他办法，因为 Object.assign() 只复制属性值。
+     *
+     * 假如源对象是一个对象的引用，它仅仅会复制其引用值。
+     */
+    let source = {a: 0, b: {c: 0}};
+    let target = {}
+    let ret = Object.assign(target, source);
+
+    console.warn('assign:')
+    console.log(JSON.stringify(ret)); // { "a": 0, "b": { "c": 0}}
+
+    console.warn('改变 source 基础类型的值')
+    source.a = 1
+    console.log(JSON.stringify(source)); // { "a": 1, "b": { "c": 0}}
+    console.log(JSON.stringify(ret)); // { "a": 0, "b": { "c": 0}}
+
+    console.warn('改变 source 引用类型里面的值')
+    source.b.c = 1
+    console.log(JSON.stringify(source)); // { "a": 1, "b": { "c": 1}}
+    console.log(JSON.stringify(ret)); // { "a": 0, "b": { "c": 1}}
+
+    /**
+     * 合并对象
+     */
+    console.warn('合并对象')
+    o1 = {a: 1};
+    o2 = {b: 2};
+    o3 = {c: 3};
+
+    obj = Object.assign(o1, o2, o3);
+    console.log('obj:', obj); // { a: 1, b: 2, c: 3 }
+    console.log('o1:', o1);  // { a: 1, b: 2, c: 3 }, target object itself is changed.
+
+    /**
+     * 合并具有相同属性的对象
+     * 属性会被后续参数中具有相同属性的其他对象覆盖。
+     */
+    console.warn('合并具有相同属性的对象')
+    o1 = {a: 1, b: 1, c: 1};
+    o2 = {b: 2, c: 2};
+    o3 = {c: 3};
+    obj = Object.assign({}, o1, o2, o3);
+    console.log('obj:', obj); // { a: 1, b: 2, c: 3 }
+
+    /**
+     * 合并 Symbol 类型属性
+     */
+    console.warn('合并 Symbol 类型属性')
+    o1 = {a: 1}
+    o2 = {[Symbol('foo')]: 2}
+    obj = Object.assign({}, o1, o2)
+    console.log('obj:', obj); // { a: 1, Symbol(foo): 2 }
+
+    /**
+     * 原型链上的属性和不可枚举属性不能被复制
+     */
+    console.warn('原型链上的属性和不可枚举属性不能被复制')
+    source = Object.create({a: 1}, {
+        foo: {
+            value: 2
+        },
+        bar: {
+            enumerable: true,
+            value: 3
+        }
+    })
+    obj = Object.assign({}, source)
+    console.log('obj:', obj) // { bar: 3 }
+
+    /**
+     * 基本类型会被包装为对象
+     */
+    console.warn('基本类型会被包装为对象')
+    // 字符串可以被枚举合并
+    obj = Object.assign({}, 'abc')
+    console.log('obj:', obj) // { 0: 'a', 1: 'b', 2: 'c' }
+
+    // 其它基础类型，会被忽略
+    obj = Object.assign({}, null, undefined, NaN, 123, true, false, Symbol('foo'), 1n)
+    console.log('obj:', obj) // {}
+
+    /**
+     * 异常会打断后续拷贝任务
+     */
+    target = Object.defineProperty({}, 'foo', {
+        value: 1,
+        writable: false
+    })
+    let ret2
+    try {
+        ret2 = Object.assign(target,
+            {bar: 2,},
+            {foo: 3/*`foo`不可写，会抛出异常并打断后续拷贝任务*/},
+            {baz: 4}
+        )
+    } catch (e) {
+        console.warn(e)
+    }
+    console.log('target:', target) // {bar: 2, foo: 1} // 拷贝任务被打断，后续拷贝任务被终止
+    console.log('ret2:', ret2) // 拷贝任务被打断，返回结果为：undefined
+
+    /**
+     * 拷贝访问器
+     * get 访问器：调用 get 访问器，并将其返回值作为 目标对象自身属性的值
+     * set 存储器：将 set 存储器名称添加到目标对象自身属性中，但是其属性值为 undefined
+     */
+    console.warn('拷贝访问器')
+    source = {
+        foo: 1,
+        get bar() {
+            return 2
+        },
+        set baz(val) {
+            this.foo = val
+        }
+    }
+    console.log('source:', source)
+    obj = Object.assign({}, source)
+    console.log('obj:', obj) // { bar: 2, baz: undefined, foo: 1 }
+</script>
+</body>
+</html>
