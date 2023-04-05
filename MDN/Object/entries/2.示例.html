@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.示例</title>
+</head>
+<body>
+<script>
+    const obj1 = {foo: 'bar', baz: 42};
+    console.log('obj1:', Object.entries(obj1)); // [ ['foo', 'bar'], ['baz', 42] ]
+
+    // array like object
+    const obj2 = {0: 'a', 1: 'b', 2: 'c'};
+    console.log('obj2:', Object.entries(obj2)); // [ ['0', 'a'], ['1', 'b'], ['2', 'c'] ]
+
+    // array like object with random key ordering
+    const obj3 = {100: 'a', 2: 'b', 7: 'c'};
+    console.log('obj3:', Object.entries(obj3)); // [ ['2', 'b'], ['7', 'c'], ['100', 'a'] ]
+
+    // getFoo is property which isn't enumerable
+    const obj4 = Object.create({}, {
+        getFoo: {
+            value() {
+                return this.foo;
+            }
+        }
+    });
+    obj4.foo = 'bar';
+    console.log('obj4:', Object.entries(obj4)); // [ ['foo', 'bar'] ]
+
+    // non-object argument will be coerced to an object
+    console.log('`foo` 字符串:', Object.entries('foo')); // [ ['0', 'f'], ['1', 'o'], ['2', 'o'] ]
+
+    // using array extras
+    Object.entries({a: 5, b: 7, c: 9}).forEach(([key, value]) => {
+        console.log(`${key} ${value}`); // "a 5", "b 7", "c 9"
+    });
+</script>
+</body>
+</html>
