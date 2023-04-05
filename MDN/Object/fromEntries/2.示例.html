@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.示例</title>
+</head>
+<body>
+<script>
+    /**
+     * Map 转化为 Object
+     */
+    map = new Map([['a', 1], ['b', 2], ['c', 3]])
+    obj = Object.fromEntries(map)
+    console.log('Map 转化为 Object:', obj)
+
+    /**
+     * Array 转化为 Object
+     */
+    const ary = [[1, 'a'], [3, 'b'], [5, 'c']]
+    obj = Object.fromEntries(ary)
+    console.log('Array 转化为 Object:', obj)
+
+    /**
+     * 对象转换
+     */
+    obj = {a: 1, b: 2, c: 3}
+    entries = Object.entries(obj).map(([key, val]) => [key.toUpperCase(), val * 2])
+    Object.fromEntries(entries)
+    console.log('对象转换:', obj)
+</script>
+</body>
+</html>
