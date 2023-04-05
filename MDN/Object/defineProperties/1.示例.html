@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.示例</title>
+</head>
+<body>
+<script>
+    const target = {}
+    Object.defineProperties(target, {
+        prop1: {
+            writable: true, // 可写
+            value: 1
+        },
+        prop2: {
+            enumerable: true, // 可枚举
+            value: 2
+        },
+        prop3: {
+            get() {
+                return this.prop1
+            }
+        },
+        prop4: {
+            set(val) {
+                this.prop2 = val
+            }
+        }
+    })
+    console.log(target)
+</script>
+</body>
+</html>
