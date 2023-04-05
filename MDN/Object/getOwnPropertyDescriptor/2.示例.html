@@ -12,26 +12,54 @@
             return 'foo'
         }
     }
+    /**
+     * 获取 get 属性描述符
+     */
+    console.warn('获取 get 属性描述符')
     console.log('obj:', obj)
     desc = Object.getOwnPropertyDescriptor(obj, 'foo')
-    console.log('desc:', desc)
+    console.log('desc:', desc) // { configurable: true, enumerable: true, get: foo(), set: undefined }
 
+    /**
+     * 获取对象自身属性的属性描述符
+     */
+    console.warn('获取对象自身属性的属性描述符')
     obj = {bar: 'bar'}
     desc = Object.getOwnPropertyDescriptor(obj, 'bar')
-    console.log('desc:', desc)
+    console.log('desc:', desc) // {configurable: true, enumerable: true, value: 'bar', writable: true}
 
+    /**
+     * 获取通过 `defineProperty` 定义的属性描述符
+     */
+    console.warn('获取通过 `defineProperty` 定义的属性描述符')
     obj = {}
     Object.defineProperty(obj, 'baz', {value: 'baz'})
     desc = Object.getOwnPropertyDescriptor(obj, 'baz')
-    console.log('desc:', desc)
+    console.log('desc', desc) // {configurable: false, enumerable: false, value: 'baz', writable: false}
 
+    /**
+     * 修改通过 `getOwnPropertyDescriptor` 获取到的属性描述符
+     */
+    console.warn('修改通过 `getOwnPropertyDescriptor` 获取到的属性描述符')
     obj = {}
     Object.defineProperty(obj, 'prop', {value: 1, configurable: true})
     desc = Object.getOwnPropertyDescriptor(obj, 'prop')
-    desc.value = 2
-    console.log('obj.prop:', obj.prop)
-    Object.defineProperty(obj, 'prop', desc)
-    console.log('obj.prop:', obj.prop)
+    console.log('初始的 desc:', desc) // {configurable: true, enumerable: false, value: 1, writable: false}
+    desc.value = 2 // 修改获取到的属性描述符的 `value`
+    desc.writable = true // 修改获取到的属性描述符的 `value`
+    console.log('修改前的 obj.prop:', obj.prop) // 1
+    Object.defineProperty(obj, 'prop', desc) // 使用修改后的属性描述符
+    console.log('修改后的 obj.prop:', obj.prop) // 2
+    desc = Object.getOwnPropertyDescriptor(obj, 'prop')
+    console.log('修改后的 desc:', desc) // { configurable: true, enumerable: false, value: 2, writable: true }
+
+    /**
+     * Symbol
+     */
+    console.warn('获取 Symbol 属性描述符')
+    obj = {[Symbol.for('foo')]: 1}
+    desc = Object.getOwnPropertyDescriptor(obj, Symbol.for('foo'))
+    console.log('desc:', desc) // {configurable: true, enumerable: true, value: 1, writable: true}
 </script>
 </body>
 </html>

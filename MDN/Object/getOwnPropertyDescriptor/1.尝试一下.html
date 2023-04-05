@@ -5,19 +5,24 @@
     <title>1.尝试一下</title>
 </head>
 <body>
-<h1>
-  Object.getOwnPropertyDescriptor() 方法返回指定对象上一个自有属性对应的属性描述符。（自有属性指的是直接赋予该对象的属性，不需要从原型链上进行查找的属性）
-</h1>
+
 </body>
 <script>
-  const obj = { prop: 1 }
-  const desc = Object.getOwnPropertyDescriptor(obj, 'prop')
-  console.log('desc:', desc)
-  console.log('desc.value:', desc.value)
-  console.log('desc.writable:', desc.writable)
-  console.log('desc.configurable:', desc.configurable)
-  console.log('desc.enumerable:', desc.enumerable)
-  console.log('desc.get:', desc.get)
-  console.log('desc.set:', desc.set)
+    let obj = {prop: 1}
+    let desc = Object.getOwnPropertyDescriptor(obj, 'prop')
+    console.log('desc:', desc) // { value: 1, writable: true, enumerable: true, configurable: true}
+    console.log('desc.value:', desc.value) // 1
+    console.log('desc.writable:', desc.writable) // true
+    console.log('desc.configurable:', desc.configurable) // true
+    console.log('desc.enumerable:', desc.enumerable) // true
+    console.log('desc.get:', desc.get) // undefined
+    console.log('desc.set:', desc.set) // undefined
+
+    /**
+     * 不需要从原型链上进行查找的属性
+     */
+    obj = Object.create({name: '原型上的 `name`'})
+    desc = Object.getOwnPropertyDescriptor(obj, 'name')
+    console.log('获取原型上的描述符：', desc) // undefined
 </script>
 </html>

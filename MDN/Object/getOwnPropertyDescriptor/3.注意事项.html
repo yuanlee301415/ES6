@@ -5,14 +5,39 @@
     <title>3.注意事项</title>
 </head>
 <body>
-<h1>
-  在 ES5 中，如果该方法的第一个参数不是对象（而是原始类型），那么就会产生出现 TypeError。而在 ES2015，第一个的参数不是对象的话就会被强制转换为对象。
-</h1>
-</body>
 <script>
-  let desc
-  desc = Object.getOwnPropertyDescriptor('foo', 0)
-  console.log('字符串下标的 desc:', desc)
+    /**
+     * 注意事项
+     * 在 ES5 中，如果该方法的第一个参数不是对象（而是原始类型），那么就会产生出现 TypeError。而在 ES2015，第一个的参数不是对象的话就会被强制转换为对象。
+     */
+    console.warn('字符串')
+    let target = 'abc'
+    let desc = Object.getOwnPropertyDescriptor(target, 0) // 其属性不可配置，不可写
+    console.log('desc:', desc) // {configurable: false, enumerable: true, value: 'a', writable: false}
 
+    console.warn('数值')
+    target = 123
+    console.log(Object.getOwnPropertyDescriptor(target, 0)) // undefined
+
+    console.warn('布尔值')
+    target = false
+    console.log(Object.getOwnPropertyDescriptor(target, 0)) // undefined
+
+    console.warn('undefined')
+    target = void 0
+    try {
+        console.log(Object.getOwnPropertyDescriptor(target, 0))
+    } catch (e) {
+        console.error(e) // TypeError: Cannot convert undefined or null to object
+    }
+
+    console.warn('null')
+    target = null
+    try {
+        console.log(Object.getOwnPropertyDescriptor(target, 0))
+    } catch (e) {
+        console.error(e) // TypeError: Cannot convert undefined or null to object
+    }
 </script>
+</body>
 </html>
