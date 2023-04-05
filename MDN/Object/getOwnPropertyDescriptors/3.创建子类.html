@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3.创建子类</title>
+</head>
+<body>
+<script>
+
+    function Person(name, age) {
+        this.name = name
+        this.age = age;
+    }
+
+    Person.prototype.isPerson = true
+    Person.prototype.say = function () {
+        console.log(`say:`, {name: this.name, age: this.age, isPerson: this.isPerson})
+    }
+
+    function Student(name, age, school, grade) {
+        Person.call(this, name, age)
+        this.school = school
+        this.grade = grade
+    }
+
+    Student.prototype = Object.create(Person.prototype, Object.getOwnPropertyDescriptors({
+        isStudent: true,
+        study: function () {
+            console.log(`study:`, {name: this.name, age: this.age, isPerson: this.isPerson}, {
+                school: this.school,
+                grade: this.grade,
+                isStudent: this.isStudent
+            })
+        }
+    }))
+    Object.defineProperty(Student.prototype, 'constructor', {value: Student})
+
+    let peter = new Person("peter", 13);
+    console.log('peter:', peter);
+    peter.say()
+
+    let tom = new Student("peter", 13, 'TH', 6);
+    console.log('tom:', tom);
+    tom.say()
+    tom.study()
+</script>
+</body>
+</html>

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.尝试一下</title>
+</head>
+<body>
+<script>
+    let obj = {}
+    console.log(Object.getOwnPropertyDescriptors(obj)) // {}
+
+    obj = {a: 1, b: 2}
+    console.log(Object.getOwnPropertyDescriptors(obj)) // {a: {configurable: true, enumerable: true, value: 1, writable: true}, b: {configurable: true, enumerable: true, value: 2, writable: true}}
+</script>
+</body>
+</html>

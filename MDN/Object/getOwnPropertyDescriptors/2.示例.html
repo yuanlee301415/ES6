@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.示例</title>
+</head>
+<body>
+<script>
+    /**
+     * 浅拷贝一个对象
+     */
+    let obj = Object.create({a: 1, b: 2}, {
+        foo: {
+            writable: true,
+            value: 'hello'
+        },
+        bar: {
+            configurable: false,
+            get() {
+                return 10
+            },
+            set(val) {
+                console.log('Set `bar` to:', val)
+            }
+        }
+    })
+    let proto = Object.getPrototypeOf(obj)
+    console.log('proto:', proto) // { a: 1, b: 2}
+
+    let desc = Object.getOwnPropertyDescriptors(obj)
+    console.log('desc:', desc) // {foo: { configurable: false, enumerable: false, value: 'hello', writable: true}, bar: { configurable: false, enumerable: false, get: get(), set: set()}}
+
+    let copy = Object.create(proto, desc)
+    console.log('copy:', copy) // {bar: 10, foo: 'hello', get bar: get(), set bar: set(), [[Prototype]]: {a: 1, b: 2}}
+    copy.bar = 30
+    console.log(copy.bar) // 10
+</script>
+</body>
+</html>
