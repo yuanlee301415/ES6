@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>使用 null 原型的对象</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 使用 null 原型的对象
+     * 以 null 为原型的对象存在不可预期的行为，因为它未从 Object.prototype 继承任何对象方法。特别是在调试时，因为常见的对象属性的转换/检测工具可能会产生错误或丢失信息（特别是在静默模式，会忽略错误的情况下）。
+     */
+    const normalObj = {}
+    const nullProtoObj = Object.create(null)
+
+    console.log('normalObj:' + normalObj)
+
+    try {
+        console.log('nullProtoObj:' + nullProtoObj)
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: Cannot convert object to primitive value
+    }
+
+    // 其他方法也同样会失败。
+    console.log(normalObj.valueOf())
+
+    try {
+        console.log(nullProtoObj.valueOf())
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: nullProtoObj.valueOf is not a function
+    }
+
+    console.log(normalObj.hasOwnProperty('name'))
+    try {
+        console.log(nullProtoObj.hasOwnProperty('name'))
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: nullProtoObj.hasOwnProperty is not a function
+    }
+
+    console.log(normalObj.constructor) // ƒ Object() { [native code] }
+    console.log(nullProtoObj.constructor) // undefined
+
+    /**
+     * 我们可以为以 null 为原型的对象添加 toString 方法
+     * 与常规的对象不同，nullProtoObj 的 toString 方法是这个对象自身的属性，而非继承自对象的原型。
+     */
+    nullProtoObj.toString = Object.prototype.toString
+    console.log("nullProtoObj is: " + nullProtoObj)
+    console.log(nullProtoObj)
+</script>
+</html>

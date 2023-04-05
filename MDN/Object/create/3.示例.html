@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3.示例</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 示例
+     * 用 Object.create() 实现类式继承
+     */
+    function Shape() {
+        this.x = 0
+        this.y = 0
+    }
+
+    Shape.prototype.move = function (x, y) {
+        this.x += x
+        this.y += y
+        console.log('move to:', {x, y})
+    }
+    console.log('new Shape():', new Shape())
+    function Rect() {
+        Shape.call(this)
+    }
+
+    Rect.prototype = Object.create(Shape.prototype)
+    Rect.prototype.constructor = Rect
+
+    const rect = new Rect()
+    console.log('rect:', rect)
+    console.log('instance of Shape?', rect instanceof Shape)
+    console.log('instance of Rect?', rect instanceof Rect)
+    rect.move(3, 5)
+</script>
+</html>

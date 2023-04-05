@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.尝试一下</title>
+</head>
+<body>
+
+</body>
+<script>
+    const person = {
+        isHuman: false,
+        print() {
+            console.log(`My name is ${this.name}, Am I human? ${this.isHuman}`)
+        }
+    }
+
+    const me = Object.create(person) // 以 `person` 对象作为原型
+    console.log('me', me)
+    me.toString() // 证明了：新创建的对象继承了 `person` 本身的原型链
+    me.name = 'Tom'
+    me.isHuman = true
+    me.print()
+</script>
+</html>

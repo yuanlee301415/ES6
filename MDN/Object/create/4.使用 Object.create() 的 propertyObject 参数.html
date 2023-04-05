@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4.使用 Object.create() 的 propertyObject 参数</title>
+</head>
+<body>
+<script>
+    const obj = Object.create(Object.prototype, {
+        foo: {
+            writable: true,
+            value: 'hello'
+        },
+        bar: {
+            configurable: false,
+            get() {
+                return 10
+            },
+            set(val) {
+                console.log('Set `o.bar` to:', val)
+            }
+        }
+    })
+    console.log('foo & bar>obj:', obj)
+</script>
+</body>
+</html>
