@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.示例</title>
+</head>
+<body>
+<div id="div"></div>
+<script>
+    console.warn(true)
+    console.log('null:', Object.is(null, null))
+    console.log('undefined:', Object.is(undefined, undefined))
+    console.log('NaN:', Object.is(NaN, NaN))
+    console.log('NaN===0/0:', Object.is(NaN, 0 / 0))
+    console.log('NaN===Number.NaN:', Object.is(NaN, Number.NaN))
+    console.log('Infinity:', Object.is(Infinity, Infinity))
+    console.log('-Infinity===-1/0:', Object.is(-Infinity, -1 / 0))
+    console.log('window:', Object.is(window, window))
+    console.log('document.body:', Object.is(document.body, document.body))
+    console.log('document.getElementById(\'box\'):', Object.is(document.getElementById('box'), document.getElementById('box')))
+
+    console.warn(false)
+    console.log('+0===-0:', Object.is(+0, -0))
+    console.log('[]===[]:', Object.is([], []))
+    console.log('{}==={}:', Object.is({}, {}))
+
+    /**
+     * Polyfill
+     */
+    function is(x, y) {
+        if (x === y) {
+            return x !== 0 || 1 / x !== 1 / y // 判断：-0 / +0
+        }
+        return x !== x && y !== y // 判断：NaN
+    }
+</script>
+</body>
+</html>
