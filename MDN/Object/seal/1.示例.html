@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.示例</title>
+</head>
+<body>
+<script>
+    let obj = {a: 1, b: 2}
+    Object.seal(obj)
+
+    /**
+     * 被密封后的对象的属性 不能删除
+     * @type {number}
+     */
+    delete obj.b
+    console.log('不能删除：', obj.b) // 2
+
+    /**
+     * 被密封后的对象的属性 可以修改
+     * @type {number}
+     */
+    obj.a = 10
+    console.log('可以修改：', obj.a) // 10
+
+    /**
+     * 不可对已经密封的对象使用属性描述符
+     */
+    try {
+        Object.defineProperties(obj, {
+            x: {
+                configurable: true,
+                value: 1
+            }
+        })
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: Cannot define property x, object is not extensible
+    }
+
+    /**
+     * 被密封后的对象的属性描述符的 `configurable` 均已被修改成了 `false`
+     * @type {{a: number}}
+     */
+    let obj2 = {a: 1}
+    Object.defineProperties(obj2, {
+        b: {
+            configurable: true,
+            value: 2
+        }
+    })
+    Object.seal(obj2)
+    console.log('desc:', Object.getOwnPropertyDescriptors(obj2)) // { a: {configurable: false, enumerable: true, value: 1, writable: true}, b: {configurable: false, enumerable: false, value: 2, writable: false} }
+</script>
+</body>
+</html>
