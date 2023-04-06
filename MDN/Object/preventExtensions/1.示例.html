@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.示例</title>
+</head>
+<body>
+<script>
+    /**
+     * 不可扩展的对象属性可以删除
+     */
+    let obj = {a: 1}
+    Object.preventExtensions(obj)
+    delete obj.a
+    console.log('delete:', obj)
+
+    /**
+     * 给不可扩展对象新增属性，会静默失败
+     */
+    obj.b = 2
+    console.log('新增属性：', obj)
+
+
+    function User() {
+    }
+
+    Object.preventExtensions(User)
+    User.role = 1
+    console.log('User.role:', User.role) // undefined
+
+    /**
+     * 修改不可扩展对象的 `__proto__` 属性，会抛出异常
+     * @type {{}}
+     */
+    let fixed = Object.preventExtensions({})
+    try {
+        fixed.__proto__ = {a: 1}
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: #<Object> is not extensible
+    }
+
+    /**
+     * 使用 `Object.defineProperty()` 新增属性，会抛出异常
+     */
+    try {
+        Object.defineProperty(obj, 'newProp', {value: 1})
+    } catch (e) {
+        console.warn(e) // Uncaught TypeError: #<Object> is not extensible
+    }
+
+    /**
+     * 不可扩展对象的原型不受 `preventExtensions` 影响
+     */
+    let proto = {a: 1}
+    obj = Object.create(proto)
+    Object.preventExtensions(obj)
+    proto.b = 2
+    console.log('给不可扩展对象的原型新增属性：', proto)
+
+    /**
+     * 非对象参数将被视为一个不可扩展的普通对象，因此会被直接返回
+     */
+    Object.preventExtensions(1)
+    Object.preventExtensions(true)
+    Object.preventExtensions(null)
+    Object.preventExtensions(undefined)
+</script>
+</body>
+</html>
