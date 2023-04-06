@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.示例</title>
+</head>
+<body>
+<script>
+    console.log(Object.keys(['a', 'b', 'c'])) // ['0', '1', '2']
+    console.log(Object.keys({a: 1, b: 2, c: 3})) // ['a', 'b', 'c']
+    console.log(Object.keys('abc')) // ['0', '1', '2']
+
+    let obj = {
+        foo: 1,
+        get bar() {
+            return this.foo
+        },
+        set baz(val) {
+            this.foo = val
+        }
+    }
+    console.log('可以获取 get / set 属性：', Object.keys(obj)) // ['foo', 'bar', 'baz']
+
+    obj = {foo: 1}
+    Object.defineProperties(obj, {
+        bar: {
+            value: 1
+        },
+        baz: {
+            value: 2
+        }
+    })
+    console.log('configurable为false：', Object.keys(obj)) // ['foo']
+
+    obj = Object.create({a: 1})
+    console.log('不获取原型上的属性：', Object.keys(obj)) // []
+
+    console.log('数字：', Object.keys(123)) // []
+    console.log('字符串：', Object.keys('abc')) // ['0', '1', '2']
+</script>
+</body>
+</html>
