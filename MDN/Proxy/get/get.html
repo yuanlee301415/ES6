@@ -21,22 +21,5 @@
     })
     console.log('p.a:', p.a) // 10
     console.log('target.a:', target.a) // undefined
-
-    /**
-     * 以下代码演示违反约束的情况。
-     */
-    let obj = {}
-    Object.defineProperty(obj, 'a', {
-        value: 1,
-        configurable: false,
-        enumerable: false,
-        writable: false
-    })
-    p = new Proxy(obj, {
-        get() {
-            return 10
-        }
-    })
-    // console.log(p.a) // Error
 </script>
 </html>
