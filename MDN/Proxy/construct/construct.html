@@ -16,7 +16,7 @@
     }
 
     const handler1 = {
-        construct(target, argArray, newTarget) {
+        construct(target, argArray) {
             console.log(`Creating a ${target.name}`)
             return new target(...argArray)
         }
