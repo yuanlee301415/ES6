@@ -9,7 +9,7 @@ proxy = new Proxy(target, {
     }
 })
 ```
-# 参数
+## 参数
 以下是传递给 set() 方法的参数。this 绑定在 handler 对象上。
 
 `target`
@@ -24,11 +24,10 @@ proxy = new Proxy(target, {
 `receiver`
 > 最初被调用的对象
 
-# 返回值
+## 返回值
 > `Boolean` 值，表示属性是否设置成功
 
 # 拦截
-该方法会拦截目标对象的以下操作：
 * 指定属性值：`proxy.prop = value` 和 `proxy[prop] = value`
 * 指定继承者的属性值：`Object.create(proxy)[prop] = value`
 * `Reflect.set()`
