@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.ES6 class 转换成 ES5</title>
+</head>
+<body>
+<script>
+    console.warn('Product')
+
+    class Product {
+        static count = 0
+
+        constructor(name, price, number) {
+            this.name = name
+            this.price = price
+            this.number = number
+            Product.count++
+            console.log('count:', Product.count)
+        }
+
+        get totalPrice() {
+            return this.price * this.number
+        }
+
+        increase() {
+            this.number++
+        }
+    }
+
+    p1 = new Product('IPhone', 5000, 2)
+    p2 = new Product('IPad', 4000, 3)
+    p1.increase()
+    p2.increase()
+    console.log('p1:', p1)
+    console.log('p1>total:', p1.totalPrice)
+    console.log('p2>total:', p2.totalPrice)
+    try {
+        Product()
+    } catch (e) {
+        console.log(e)
+    }
+
+    console.warn('_Product')
+    console.log('提前访问》_Product:', _Product)
+
+    // var 模拟暂时死区（提前访问，只是返回 undefined，但不会像ES6一样报错）
+    var _Product = function (name, price, number) {
+
+        // 判断是不是通过 new 调用的
+        if (!(this instanceof _Product)) {
+            throw new TypeError(`Class constructor _Product can not be invoked without 'new'`)
+        }
+        this.name = name
+        this.price = price
+        this.number = number
+        _Product.count++
+        console.log('count:', _Product.count)
+    }
+
+    // 静态属性
+    _Product.count = 0
+
+    // 模拟实例方法且此方法不可枚举
+    Object.defineProperty(_Product.prototype, 'increase', {
+        value: function () {
+            return this.number++
+        }
+    })
+
+    // 实现 `totalPrice` get 方法
+    Object.defineProperty(_Product.prototype, 'totalPrice', {
+        get() {
+            return this.price * this.number
+        }
+    })
+
+    p11 = new _Product('IPhone', 5000, 2)
+    p21 = new _Product('IPad', 4000, 3)
+    p11.increase()
+    p21.increase()
+    console.log('p11:', p11)
+    console.log('p11>total:', p11.totalPrice)
+    console.log('p21>total:', p21.totalPrice)
+    try {
+        _Product()
+    } catch (e) {
+        console.log(e)
+    }
+</script>
+</body>
+</html>
