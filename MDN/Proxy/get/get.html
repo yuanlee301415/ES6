@@ -21,5 +21,29 @@
     })
     console.log('p.a:', p.a) // 10
     console.log('target.a:', target.a) // undefined
+
+    /**
+     * 读取嵌套属性时：
+     * 传入 get 拦截函数的第2个参数（属性名），始终为代理对象的第一层属性
+     */
+    target = {
+        a: {
+            name: 'A',
+            b: {
+                name: 'B',
+                c: {
+                    name: 'C'
+                }
+            }
+        }
+    }
+    p = new Proxy(target, {
+        get(target, prop) {
+            console.log(`get prop:`, prop)
+            return target[prop]
+        }
+    })
+    p.a.b // logs: get prop: a
+    p.a.b.c // logs: get prop: a
 </script>
 </html>
