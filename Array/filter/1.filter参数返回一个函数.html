@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.filter参数返回一个函数</title>
+    <script>
+        const list = [
+            {
+                name: 'peter',
+                age: 13
+            },
+            {
+                name: 'tom',
+                age: 14
+            },
+            {
+                name: 'jack',
+                age: 15
+            },
+            {
+                name: 'lucy',
+                age: 16
+            },
+            {
+                name: 'lily',
+                age: 20
+            }
+        ]
+        function search() {
+            const input = document.querySelector('input').value
+            const ret = list.filter(searchItem(input))
+            console.table(ret)
+        }
+
+        function searchItem(input) {
+            if (!input) return []
+            const value = input.slice().trim().toLowerCase()
+            return function (item) {
+                return item.name.toLowerCase().includes(value) || item.age.toString().includes(value)
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+<input type="text">
+<button onclick="search()">Search</button>
+
+</body>
+</html>
