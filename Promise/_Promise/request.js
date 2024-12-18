@@ -1,13 +1,13 @@
 /**
  * 使用 MyPromise 模拟 Http 请求
  * - 如果 url 不是以 '.json' 结尾，则 reject
- * 
+ *
  * @param {string} url
- * @return {MyPromise}
+ * @return {_Promise}
  */
 function request(url) {
     const start = new Date()
-    return new MyPromise((resolve, reject) => {
+    return new _Promise((resolve, reject) => {
         const action = url.slice(-5) === '.json' ? resolve : reject
         setTimeout(() => {
             action({
@@ -16,6 +16,6 @@ function request(url) {
                     end: new Date()
                 }
             )
-        }, Math.random() * 1000 + 1000 | 0)
+        }, Math.random() * 2000 | 0)
     })
 }
