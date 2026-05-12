@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.for-await</title>
+    <script>
+        function sleep(n) {
+            return new Promise(resolve => {
+                const delay = 100 * n
+                setTimeout(() => {
+                    resolve(delay)
+                }, delay)
+            })
+        }
+    </script>
+</head>
+<body>
+<script>
+    async function main() {
+        for (let i = 0; i < 5; i++) {
+            const timeout = await sleep(i)
+            console.log(timeout)
+        }
+    }
+
+    main()
+</script>
+</body>
+</html>

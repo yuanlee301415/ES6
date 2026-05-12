@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyTest-1.初始</title>
+    <script src="./MyPromise.js"></script>
+    <script src="./request.js"></script>
+</head>
+<body>
+<script>
+    const p1 = request('./1.json')
+    p1.then((res) => {
+        console.log('p1:[onFulfilled]:', res)
+    })
+    console.warn('p1:[onFulfilled]')
+
+    const p2 = request('./2.xx')
+    p2.then(res => {
+        console.log('p2>res:', res)
+    }, e => {
+        console.error('p2:[onRejected]:', e)
+    })
+    console.warn('p2:[onReject]')
+</script>
+</body>
+</html>

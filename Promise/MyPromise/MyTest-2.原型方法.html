@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>MyTest-2.原型方法</title>
+    <script src="./MyPromise.js"></script>
+    <script src="./request.js"></script>
+</head>
+<body>
+<script>
+    const p1 = request('1.xx')
+    p1.catch(e => {
+        console.error('p1:[catch]:', e)
+    })
+    console.warn('p1:[catch]')
+    
+    const p2 = MyPromise.all([
+        request('1.json'),
+        request('2.json')
+    ]).then(res => {
+        console.log('p2:[onFulfilled]:', res)
+    }).catch(e => {
+        console.error('p2>error:', e)
+    }).finally(() => {
+        console.log('p2:[finally]')
+    })
+    console.warn('p2:[onFulfilled-finally]')
+    
+    const p3 = MyPromise.all([
+        request('1.json'),
+        request('2.xx')
+    ]).then(res => {
+        console.log('p3>res:', res)
+    }).catch(e => {
+        console.error('p3:[catch]:', e)
+    }).finally(() => {
+        console.log('p3:[finally]')
+    })
+    console.warn('p3:[catch-finally]')
+    
+    const p4 = MyPromise.all([
+        request('1.json'),
+        request('2.xx')
+    ]).finally(() => {
+        console.log('p4:[finally]')
+    }).then(res => {
+        console.log('p4>res:', res)
+    }).catch(e => {
+        console.error('p4:[catch]:', e)
+    })
+    console.warn('p4:[finally-catch]')
+    
+</script>
+</body>
+</html>

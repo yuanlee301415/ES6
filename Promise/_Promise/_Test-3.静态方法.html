@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>_Test-3.静态方法</title>
+    <script src="./_Promise.js"></script>
+    <script src="./request.js"></script>
+</head>
+<body>
+<script>
+    const p1 = _Promise.resolve('Ok 1')
+    p1.then(res => {
+        console.log('p1:[resolve]:', res)
+    }, e => {
+        console.error('p1>error:', e)
+    })
+    console.warn('p1:[resolve]')
+
+
+    const p2 = _Promise.reject('Error 2')
+    p2.then(res => {
+        console.log('p2>res:', res)
+    }, e => {
+        console.error('p2:[reject]:', e)
+    })
+    console.warn('p2:[reject]')
+
+
+    const p3 = _Promise.all([
+        request('./1.json'),
+        request('./2.json'),
+        request('./3.json'),
+    ]).then(res => {
+        console.log('p3:[onFulfilled]:', res)
+    }, e => {
+        console.error('p3>error:', e)
+    })
+    console.warn('p3:[all-onFulfilled]')
+
+
+    const p4 = _Promise.all([
+        request('./1.xx'),
+        request('./2.json'),
+        request('./3.json'),
+    ]).then(res => {
+        console.log('p4>res:', res)
+    }, e => {
+        console.error('p4:[onRejected]:', e)
+    })
+    console.warn('p4:[all-onRejected]')
+
+
+    const p5 = _Promise.race([
+        request('./1.json'),
+        request('./2.json'),
+        request('./3.json'),
+    ]).then(res => {
+        console.log('p5:[onFulfilled]:', res)
+    }, e => {
+        console.error('p5>error:', e)
+    })
+    console.warn('p5:[race-onResolved]')
+
+
+    const p6 = _Promise.race([
+        request('./1.json'),
+        request('./2.xx')
+    ]).then(res => {
+        console.log('p6:[onFulfilled]:', res)
+    }, e => {
+        console.error('p6:[onRejected]:', e)
+    })
+    console.warn('p6:[race-onRejected]')
+
+    const p7 = _Promise.allSettled([
+        request('./1.json'),
+        request('./2.json'),
+        request('./3.xx')
+    ]).then(res => {
+        console.log('p7:[onFulfilled]:', res)
+    }, e => {
+        console.error('p7>error:', e)
+    })
+    console.warn('p7:[allSettled]:', p7)
+</script>
+</body>
+</html>

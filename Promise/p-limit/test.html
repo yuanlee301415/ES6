@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test-pLimit</title>
+    <script src="pLimit.js"></script>
+    <script src="request.js"></script>
+</head>
+<body>
+
+<script>
+    const limit = pLimit(6)
+    const arr = Array.from({ length: 20 }).map((_, index) => limit(() => request(`${index}.${index % 10 ? "json":"json"}`)))
+    
+    Promise.all(arr).then(res => {
+        console.log('test>res:', res)
+    }).catch(e => {
+        console.error('test>error:', e)
+    })
+</script>
+</body>
+</html>
