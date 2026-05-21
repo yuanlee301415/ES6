@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="color-scheme" content="light dark">
+    <title>toLocalString</title>
+</head>
+<body>
+<script>
+    const date = new Date(/*2026,4, 12, 1, 2, 3*/)
+    console.log('toLocaleString:', date.toLocaleString())
+    console.log('toLocaleString>en-GB:', date.toLocaleString('en-GB'))
+    console.log('toLocaleString>ko-RA:', date.toLocaleString('ko-RA'))
+    console.log('toLocaleString>zh-CH:', date.toLocaleString('zh-CN'))
+    console.log('toLocaleString>default 时区:', date.toLocaleString('default'))
+    console.log('toLocaleString>24小时:', date.toLocaleString('default', {hourCycle: 'h24'}))
+    console.log('toLocaleString>24小时:', date.toLocaleString('default', {hour12: false}))
+    console.log('toLocaleString>年月日:', date.toLocaleString('default', {year: 'numeric', month: 'numeric', day: 'numeric'}))
+    console.log('toLocaleString>时分秒:', date.toLocaleString('default', {hourCycle: 'h24', hour: 'numeric', minute: 'numeric', second: 'numeric'}))
+</script>
+</body>
+</html>
