@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>初始化</title>
+</head>
+<body>
+<script>
+    /**
+     * 公有静态字段不会在子类中重新初始化，但可以通过原型链访问。
+     */
+    
+    class Base {
+        static baseField = '静态字段-#' + Math.random()
+    }
+
+    console.log(Base.baseField)
+    
+    class Sub extends Base {}    
+    
+    console.log(Sub.baseField)
+</script>
+</body>
+</html>

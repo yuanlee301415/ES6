@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.语法限制</title>
+</head>
+<body>
+
+</body>
+<script>
+    class A {
+        // get constructor() {} // Uncaught SyntaxError: Class constructor may not be an accessor
+    }
+
+    class B {
+        // set constructor(val) {} // Uncaught SyntaxError: Class constructor may not be an accessor
+    }
+
+    class C {
+        // async constructor() {} // Uncaught SyntaxError: Class constructor may not be an async method
+    }
+
+    class D {
+        // * constructor() {} // Uncaught SyntaxError: Class constructor may not be a generator
+    }
+
+    class E {
+        constructor() {
+        }
+
+        // constructor() {} // Uncaught SyntaxError: A class may only have one constructor
+    }
+</script>
+</html>

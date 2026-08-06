@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>语法</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 公有实例字段存在于类的每个已创建实例中。通过声明公共字段，可以确保该字段始终存在，而且类的定义也更加自文档化（self-documenting）。
+     *
+     * 公共实例字段会在基类的构造时（构造函数主体运行之前）或子类的 super() 返回后添加到实例中。没有初始化器的字段会被初始化为 undefined。
+     */
+    
+    
+    class ClassWithField {
+        instanceField;
+        instanceFieldWithInitializer = "实例字段";
+    }
+</script>
+</html>

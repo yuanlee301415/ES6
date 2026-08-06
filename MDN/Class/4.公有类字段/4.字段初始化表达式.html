@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字段初始化表达式</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 每次创建新实例时，都会对字段初始化表达式进行求值。（因为每个实例的 this 值都不同，所以初始化表达式可以访问特定于实例的属性）。
+     */
+    
+    class A {
+        id = Math.random()
+        obj = {}
+    }
+
+    const a1 = new A()
+    const a2 = new A()
+    console.log(a1.id)
+    console.log(a2.id)
+    console.log(a1.obj === a2.obj) // false
+</script>
+</html>

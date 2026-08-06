@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>描述</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * extends 关键字用来创建自定义类或者内置对象的子类。
+     *
+     * 任何可以用 new 调用并具有 prototype 属性的构造函数都可以作为候选的父类的构造函数。这两个条件必须同时成立——例如，绑定函数和 Proxy 可以被构造，但它们没有 prototype 属性，因此不能被子类化。
+     */
+    function OldStyleClass() {
+        this.prop = 1
+    }
+    OldStyleClass.prototype.method = function () {}
+    
+    class ChildClass extends OldStyleClass {}
+
+    console.log(new ChildClass())
+    
+    class ModernClass {
+        someProp = 2
+        someMethod() {
+            
+        }
+    }
+    
+    class AnOtherClass extends ModernClass {
+        
+    }
+
+    console.log(new AnOtherClass())
+</script>
+</html>

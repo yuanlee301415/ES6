@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>私有静态字段</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 私有静态字段
+     * 类似于公有静态字段，私有静态字段：
+     *
+     * - 在类实例化前被添加到类的构造函数中
+     * - 只能在类本身上可用。
+     */
+    class A {
+        static #privateStaticField = 42
+        static publicStaticMethod() {
+            return A.#privateStaticField
+        }
+    }
+    console.log(A.publicStaticMethod()) // 42
+
+
+    /**
+     * 私有静态字段有一些限制：只有定义私有静态字段的类才能访问该字段。这可能导致使用 this 时出现意想不到的行为。
+     */
+    
+    class B {
+        static #privateStaticField = 43
+        static publicStaticMethod() {
+            return this.#privateStaticField
+        }
+    }
+    
+    class C extends B {
+        
+    }
+    // console.log(C.publicStaticMethod()) // Uncaught TypeError: Cannot read private member #privateStaticField from an object whose class did not declare it
+</script>
+</html>

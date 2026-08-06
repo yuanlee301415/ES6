@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>计算字段名称</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 与属性一样，字段名称也可以计算。
+     */
+    
+    const PREFIX = 'prefix'
+    
+    class A {
+        [PREFIX + 'Field'] = '带前缀字段'
+    }
+
+    console.log(new A())
+
+    
+    /**
+     * 只在类定义时对计算字段名进行一次求值。
+     */
+    
+    class B {
+        [Math.random()] = 42
+    }
+
+    console.log(new B())
+    console.log(new B())
+</script>
+</html>

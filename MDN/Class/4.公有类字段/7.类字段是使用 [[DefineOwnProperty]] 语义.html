@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类字段是使用 [[DefineOwnProperty]] 语义</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 由于类字段是使用 [[DefineOwnProperty]] 语义（本质上是 Object.defineProperty()）添加的，因此派生类中的字段声明不会调用基类中的 setter。这种行为不同于在构造函数中使用 this.field = …。
+     */
+    
+    class Base {
+        set field(val) {
+            console.log('Set field:', val)
+        }
+    }
+    
+    class Sub extends Base {
+        field = 1
+    }
+    new Sub() // No logs
+    
+    class WithConstructor extends Base {
+        constructor() {
+            super()
+            this.field = 2
+        }
+    }
+    new WithConstructor() // Set field: 2
+    
+</script>
+</html>

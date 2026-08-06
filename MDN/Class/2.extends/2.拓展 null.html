@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>拓展 null</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * extends null 设计用于轻松创建不继承自 Object.prototype 的对象。然而，由于关于是否应在构造函数中调用 super() 的决定尚未确定，因此在实践中不可能使用任何不返回对象的构造函数实现来构造这样的类。
+     */
+    
+    try {
+        new (class extends null {})()
+    } catch (e) {
+        console.error(e) // Uncaught TypeError: Super constructor null of anonymous class is not a constructor
+    }
+
+    try {
+        new (class extends null {
+            constructor() {
+            }
+        })()    
+    } catch (e) {
+        console.error(e) // Uncaught ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor
+    }
+    
+    try {
+        new (class extends null {
+            constructor() {
+                super()
+            }
+        })()    
+    } catch (e) {
+        console.error(e) // TypeError: Super constructor null of anonymous class is not a constructor
+    }
+
+
+    /**
+     * 你需要从构造函数中明确返回一个实例。
+     */
+    
+    class NullClass extends null {
+        constructor() {
+            console.log(new.target)
+            return Object.create(new.target)
+        }
+    }
+    console.log(new NullClass()) // Function {}    
+</script>
+</html>

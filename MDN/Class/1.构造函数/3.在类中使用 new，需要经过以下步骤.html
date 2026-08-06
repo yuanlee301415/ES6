@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在类中使用 new，需要经过以下步骤</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 1.（如果是派生类）super() 调用之前的 constructor 主体。这部分不应访问 this，因为它尚未初始化。
+     */
+
+    class Base {
+        constructor(name) {
+            console.warn('Base 初始化>name:', name)
+            this.name = name
+        }
+    }
+
+    class Super extends Base {
+        constructor() {
+            // console.log(this) // Uncaught ReferenceError: Must call super constructor in derived class before accessing 'this' or returning from derived constructor at new Super
+            super();
+        }
+    }
+
+    new Super()
+
+    /**
+     * 2.（如果是派生类）执行 super() 调用，通过同样的过程初始化父类。
+     */
+    class S2 extends Base {
+        constructor(name) {
+            super(name);
+        }
+    }
+
+    new S2('S2')
+
+    /**
+     * 3.当前类的字段将被初始化。
+     */
+    class S3 extends Base {
+        id = '#001'
+
+        constructor() {
+            super();
+            console.log('S3>id:', this.id)
+        }
+    }
+
+    new S3()
+    
+    /**
+     * 在 constructor 主体中，你可以通过 this 访问正在创建的对象，并通过 new.target 访问用 new 调用的类。
+     * 请注意，在执行 constructor 之前，方法（包括 getter 和 setter）和原型链已在 this 上初始化，因此你甚至可以从父类的构造函数访问子类的方法。
+     * 但是，如果这些方法使用了 this，这时 this 尚未完全初始化。这意味着读取派生类的公共字段的结果是 undefined，而读取私有字段将导致 TypeError。
+     */
+    new (class extends class {
+        constructor() {
+            this.foo() // `foo` 方法已在 this 上初始化，可以成功调用
+        }
+    } {
+        a = 1
+        foo() {
+            console.log('a:', this.a) // 这时 this 尚未完全初始化，读取派生类的公共字段的结果是 undefined
+        }
+    })()
+</script>
+</html>

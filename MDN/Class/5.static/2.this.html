@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script>
+    class Base {
+        static baseField = '基类字段'
+        static baseOtherField = 'Other-' + this.baseField
+        static baseMethod() {
+            return [this.baseField, this.baseOtherField].join(', ')
+        }
+    }
+
+    console.log(Base.baseOtherField)
+    console.log(Base.baseMethod())
+    
+</script>
+</body>
+</html>

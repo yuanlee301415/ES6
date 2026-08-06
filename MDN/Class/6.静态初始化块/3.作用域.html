@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>作用域</title>
+</head>
+<body>
+<script>
+    /**
+     * 静态代码块内声明的变量的作用域是该代码块的本地。这包括 var、function、const 和 let 声明。代码块中的 var 声明不会被提升。
+     */
+
+    var value = 1
+
+    class A {
+        static {
+            var value = 2
+
+            function foo() {
+                console.log(value)
+            }
+
+            foo()
+        }
+    }
+
+    console.log(value) // 1
+
+    try {
+        foo()
+    } catch (e) {
+        console.error(e) // ReferenceError: foo is not defined
+    }
+
+</script>
+</body>
+</html>

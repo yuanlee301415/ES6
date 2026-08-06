@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>super</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 在字段初始化器中，super 指向基类的 prototype 属性，它包含基类的实例方法，但不包含其实例字段。
+     */
+    
+    class Base {
+        baseField = "基类字段";
+        
+        baseMethod() {
+            return "基类方法输出" 
+        }
+        
+        static baseStatic = '基类静态字段'
+    }
+    
+    class Sub extends Base {
+        subField1 = super.baseField
+        subField2 = super.baseMethod()
+        subField3 = super.baseStatic
+        static subStaticField = super.baseStatic
+    }
+    
+    const sub = new Sub()
+    console.log('subField1:', sub.subField1) // undefined（super 不包含基类的实例字段）
+    console.log('subField2:', sub.subField2) // "基类方法输出"
+    console.log('subField3:', sub.subField3) // undefined（super 不包含基类的静态成员）    
+    console.log('subStaticField:', Sub.subStaticField) // '基类静态字段'    
+</script>
+</html>

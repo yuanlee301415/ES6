@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5.访问私有静态元素</title>
+</head>
+<body>
+<script>
+    /**
+     * 静态代码块的作用域嵌套在类主体的词法作用域内，并且可以访问类内声明的私有静态字段和方法。
+     */    
+    
+    class A {
+        static #privateField = '私有静态字段'
+
+        static #privateMethod() {
+            return '私有静态方法'
+        }
+
+        static {
+            console.log(this.#privateField)
+            console.log(this.#privateMethod())
+        }
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>从类的构造函数和其他方法中调用静态成员</title>
+</head>
+<body>
+<script>
+    /**
+     * 从类的构造函数和其他方法中调用静态成员
+     * 静态成员不能使用 this 关键字从非静态方法直接访问静态成员。你需要使用类名来调用 或将静态成员作为 constructor 的属性调用。
+     */
+    
+    class A {
+        static staticField = '静态字段'
+        static staticMethod() {
+            return '静态方法'
+        }
+        constructor() {
+            console.warn('在 constructor 中，调用静态成员')
+            console.log(A.staticField)
+            console.log(A.staticMethod())
+            console.log(this.constructor.staticField)
+            console.log(this.constructor.staticMethod())
+            this.init()
+        }
+        
+        init() {
+            console.warn('在实例方法中，调用静态成员')
+            console.log(this.constructor.staticField)
+            console.log(this.constructor.staticMethod())
+        }
+    }
+    new A()
+</script>
+</body>
+</html>

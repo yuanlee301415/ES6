@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>混入</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 抽象子类或混入是类的模板。一个类只能有一个父类，因此不可能从工具类等多重继承。功能必须由超类提供。
+     * 
+     * 一个以父类为输入，以扩展该父类的子类为输出的函数可以用来实现混入。
+     */
+    
+    const calcMixin = (Base) => class extends Base {
+       calc() {
+           console.log('calc', this)
+       }
+    }
+    
+    const randomMixin = (Base) => class extends Base {
+        random() {
+            console.log('random', this)
+        }
+    }
+    
+    class Foo {
+        name = 'Foo'
+        constructor() {
+        }
+    }
+    
+    class Bar extends calcMixin(randomMixin(Foo)){
+        constructor(number) {
+            super();
+            this.number = number
+        }
+    }
+    const bar = new Bar(123)
+    bar.random()
+    bar.calc()
+</script>
+</html>

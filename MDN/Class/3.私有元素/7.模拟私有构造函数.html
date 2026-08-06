@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模拟私有构造函数</title>
+</head>
+<body>
+
+</body>
+<script>
+    class PrivateConstructor {
+        static #isInit = false
+        constructor() {
+            if (!PrivateConstructor.#isInit) {
+                throw new Error('PrivateConstructor is not constructable.')
+            }
+            PrivateConstructor.#isInit = false
+        }
+        
+        static create() {
+            PrivateConstructor.#isInit = true
+            return new PrivateConstructor()
+        }
+    }
+    
+    try {
+        new PrivateConstructor()
+    } catch (e) {
+        console.error(e) // Uncaught Error: PrivateConstructor is not constructable.
+    }
+
+    console.log(PrivateConstructor.create())
+    console.log(PrivateConstructor.create())
+</script>
+</html>

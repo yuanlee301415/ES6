@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5.私有实例方法</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 私有实例方法
+     * 与公有实例方法不同，私有实例方法：
+     *
+     * - 在实例字段安装之前立即安装，并且
+     * - 只能在类的实例上可用，不能在类的 .prototype 属性上访问。
+     */
+    
+    class A {
+        #privateMethod() {
+            return 42
+        }
+        
+        publicMethod() {
+            return this.#privateMethod()
+        }
+    }
+
+    console.log(new A().publicMethod()) // 42
+    
+    
+    class B {
+        #method() {}
+        
+        static getMethod(x) {
+            return x.#method
+        }
+    }
+
+    console.log(B.prototype)
+    console.log(B.getMethod(new B()))
+    // console.log(B.getMethod(B.prototype)) // [只能在类的实例上可用，不能在类的 .prototype 属性上访问。]: Uncaught TypeError: Receiver must be an instance of class B
+    
+</script>
+</html>
