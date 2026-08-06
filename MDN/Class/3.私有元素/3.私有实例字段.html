@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>私有实例字段</title>
+</head>
+<body>
+
+</body>
+<script>
+  /**
+   * 私有实例字段
+   * 
+   * 类似于对应的公有字段，私有实例字段：
+   *
+   * - 在基类中的构造函数运行之前添加，或者在子类中调用 super() 之后立即添加
+   * - 只在类的实例上可用。
+   */
+  
+  
+  class Base {
+    #privateField
+    constructor() {
+      this.#privateField = 42
+    }
+  }
+  
+  class Sub extends Base {
+    #privateField = 24
+    #privateSubField
+    constructor() {
+      super();
+      this.#privateSubField = 23
+      console.log(this.#privateField)
+      console.log(this.#privateSubField)
+    }
+  }
+
+  console.log(new Sub())
+</script>
+</html>

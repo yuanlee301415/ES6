@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>try</title>
+</head>
+<body>
+<script>
+    class SIB {
+        static staticFieldA = 'staticFieldA'
+        static staticMethod() {
+            return `staticMethod`
+        }
+        static  {
+            console.log(this.staticFieldA)            
+            console.log(this.staticMethod())            
+        }
+    }
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>字段是逐个添加的</title>
+</head>
+<body>
+
+</body>
+<script>
+    class A {
+        a = 1
+        b = this.c
+        c = this.a + 1
+        d = this.c + 1
+    }
+    const ins = new A()
+    console.log(ins.b) // undefined
+    console.log(ins.c) // 2
+    console.log(ins.d) // 3
+</script>
+</html>

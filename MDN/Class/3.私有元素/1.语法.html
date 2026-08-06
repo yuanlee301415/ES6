@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>语法</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 语法
+     * - 私有字段
+     * - 私有字段 + 初始值
+     * - 私有方法
+     * - 私有静态字段
+     * - 私有静态字段 + 初始值
+     * - 私有静态方法
+     */
+
+    class ClassWithPrivate {
+        #privateField
+        #privateFieldWithInitializer = 42
+
+        #privateMethod() {
+        }
+
+        static #privateStaticField
+        static #privateStaticFieldWithInitializer = 43
+
+        static #privateStaticMethod() {
+        }
+    }
+
+    /**
+     * 在类外部引用私有元素、引用未在类内部声明的私有元素，或尝试使用 delete 移除声明的元素都会抛出语法错误。
+     */
+
+    class ClassWithPrivate2 {
+        #privateField = 1
+
+        constructor() {
+            // this.#undeclaredField = 2 // [引用未在类内部声明的私有元素>error]: Uncaught SyntaxError: Private field '#undeclaredField' must be declared in an enclosing class
+            // delete this.#privateField // [使用 delete 移除声明的元素>error]: Uncaught SyntaxError: Private fields can not be deleted
+        }
+    }
+
+    const ins = new ClassWithPrivate2()
+    // console.log(ins.#privateField) // [在类外部引用私有元素>error]: Uncaught SyntaxError: Private field '#privateField' must be declared in an enclosing class
+
+
+    /**
+     * 访问对象中不存在的私有元素，会抛出 TypeError 错误，而不是像普通属性一样返回 undefined。
+     */
+    class C {
+        #x = 'X'
+        static getX(obj) {
+            return obj.#x
+        }
+    }
+
+    console.log(C.getX(new C()))
+    
+    try {
+        console.log(C.getX({}))
+    } catch (e) {
+        console.error(e) // TypeError: Cannot read private member #x from an object whose class did not declare it
+    }
+    
+    
+</script>
+</html>

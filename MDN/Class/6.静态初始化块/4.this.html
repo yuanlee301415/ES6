@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>this</title>
+</head>
+<body>
+<script>
+    /**
+     * 静态代码块中的 this 是指类的构造函数对象。super 可用于访问父类的静态属性。但请注意，在类的静态初始化块中调用 super() 或使用 arguments 对象都会造成语法错误。
+     */
+
+
+    class A {
+        static field = 'staticField'
+
+        static method() {
+            return 'Static method'
+        }
+
+        static {
+            console.dir(this) // class A
+            console.log(this.field)
+            console.log(this.field)
+            console.log(this.method())
+        }
+    }
+
+    class B extends A {
+        static {
+            console.warn('子类访问父类')
+            console.log(super.field)
+            console.log(super.method())
+        }
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>定义类</title>
+</head>
+<body>
+<script>
+    /**
+     * 定义类
+     * 类实际上是“特殊的函数”，就像你能够定义的函数表达式和函数声明一样，类也有两种定义方式：类表达式和类声明。
+     */
+
+    /**
+     * 类声明
+     */
+
+    class Rectangle {
+        constructor(width, height) {
+            this.width = width
+            this.height = height
+        }
+    }
+
+    /**
+     * 类表达式 - 1（类是匿名的）
+     */
+    const Rectangle2 = class {
+        constructor(width, height) {
+            this.width = width
+            this.height = height
+        }
+    }
+
+    /**
+     * 类表达式 - 2（类是具名的）
+     */
+    const Rectangle3 = class _Rectangle3 {
+        constructor(width, height) {
+            this.width = width
+            this.height = height
+        }
+    }
+    
+</script>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>从另一个静态方法调用静态成员</title>
+</head>
+<body>
+<script>
+    /**
+     * 从另一个静态方法调用静态成员
+     * 
+     * 为了在同一类的另一个静态方法中调用静态方法或属性，可以使用 this 关键字。
+     */
+    
+    class A {
+        static prop = '静态属性'
+        static method() {
+            return `静态方法和${this.prop} 被调用`
+        }
+        static otherMethod() {
+            return `从另一个静态方法而来的 ${this.method()}`
+        }
+    }
+
+    console.log(A.method())
+    console.log(A.otherMethod())
+</script>
+</body>
+</html>

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>访问由基类构造函数创建的属性</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 由于初始化器是在基类执行完成后求值的，因此你可以访问由基类构造函数创建的属性。
+     */
+    
+    class Person {
+        constructor(name) {
+            this.name = name
+        }
+    }
+    
+    class Professor extends Person {
+        name = `${this.name} 教授`
+    }
+
+    console.log(new Professor('Radev').name)
+</script>
+</html>

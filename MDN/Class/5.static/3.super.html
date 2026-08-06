@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>super</title>
+</head>
+<body>
+<script>
+    /**
+     * 在字段初始化器中，this 指向当前类，super 指向基类构造函数。
+     */
+    
+    class Base {
+        static baseField = '基类静态字段'
+        static baseMethod() {
+            return this.baseField
+        }
+    }
+    
+    class Sub extends Base {
+        static subField = '派生类获取的-' + super.baseMethod()
+    }
+
+    console.log(Sub.subField)
+</script>
+</body>
+</html>

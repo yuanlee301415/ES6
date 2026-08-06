@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>在各自的构造函数运行之前添加</title>
+</head>
+<body>
+
+</body>
+<script>
+    class Base {
+        constructor() {
+            console.log('基类构造函数：', this.field)
+        }
+    }
+    
+    class Sub extends Base {
+        field = 1
+        constructor() {
+            super();
+            console.log('派生类构造函数：', this.field)
+            this.field = 2
+        }
+    }
+
+    console.log(new Sub().field)    
+</script>
+</html>

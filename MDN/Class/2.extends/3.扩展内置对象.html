@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>扩展内置对象</title>
+</head>
+<body>
+
+</body>
+<script>
+    class MyDate extends Date {
+        toString() {
+            const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+            return [this.getDate(), months[this.getMonth()], this.getFullYear()].join('-')
+        }
+    }
+
+    console.log(new MyDate('2020-5-1').toString())
+</script>
+</html>

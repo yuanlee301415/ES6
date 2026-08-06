@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>in</title>
+</head>
+<body>
+
+</body>
+<script>
+  /**
+   * 你也可以使用 in 运算符来检查一个外部定义的对象是否拥有一个私有元素。如果对应的私有字段或私有方法存在，则返回 true，否则返回 false。
+   */
+  
+  class A {
+    #x
+    constructor(x) {
+      this.#x = x
+    }
+    
+    static getX(obj) {
+      if (#x in obj) {
+        return obj.#x
+      }    
+      return  new Error('obj 必须是 A 的实例！')
+    }
+  }
+
+  console.log(A.getX(new A(42)))
+  console.log(A.getX(new Date()))
+  
+</script>
+</html>

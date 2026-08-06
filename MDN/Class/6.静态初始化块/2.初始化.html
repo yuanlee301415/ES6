@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>初始化</title>
+</head>
+<body>
+<script>
+    /**
+     * 静态初始化块允许在类中声明任意初始化逻辑，并在类求值的过程中执行。
+     */
+
+    class A {
+        static {
+            console.warn('在类求值的过程中执行（类还没有实例化）')
+        }
+    }
+
+    /**
+     * 类主体中可以包含任意数量的 static {} 初始化块。这些静态初始化块与任何交错的静态字段初始器一起，按照声明的顺序进行求值。
+     */
+
+    class B {
+        static voidField1 = console.log('静态字段 1')
+        static staticFieldA = 'staticFieldA'
+        static {
+            console.log('初始化块 1')
+            console.log(this.staticFieldA) // 'staticFieldA'
+        }
+        static {
+            console.log('初始化块 2')
+            console.log(this.staticFieldB) // undefined
+        }
+        static voidField2 = console.log('静态字段 2')
+        static staticFieldB = 'staticFieldB'
+        static {
+            console.log('初始化块 3')
+            console.log(this.staticFieldB) // 'staticFieldB'
+        }
+    }
+
+    /**
+     * 先进行父类的静态初始化，然后才是子类的静态初始化。
+     */
+
+    class Base {
+        static {
+            console.log('父类静态初始化块')
+        }
+    }
+
+    class Sub extends Base {
+        static {
+            console.log('子类静态初始化块')
+        }
+    }
+
+</script>
+</body>
+</html>

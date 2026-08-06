@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>私有静态方法</title>
+</head>
+<body>
+
+</body>
+<script>
+    /**
+     * 私有静态方法
+     * 
+     * 与公有静态方法类似，私有静态方法：
+     *
+     * - 在类被解析时被添加到类的构造函数中，并且
+     * - 只能在类本身上可用。
+     */
+    
+    
+    class A {
+        static #privateStaticMethod() {
+            return 42
+        }
+        
+        static publicStaticMethod() {
+            return this.#privateStaticMethod()
+        }
+    }
+
+    console.log(A.publicStaticMethod()) // 42
+    
+    class Sub extends A {
+        
+    }
+
+    console.log(Sub.publicStaticMethod()) // [只能在类本身上可用]: Uncaught TypeError: Receiver must be class A
+</script>
+</html>
